@@ -16,8 +16,10 @@ class StudentController extends Controller
          $this->middleware('permission:student-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:student-delete', ['only' => ['destroy']]);
     }
-    public function index()
+    public function index(Request $request)
     {
+        $user = $request->user()->getRoleNames()[0];
+        //dd($user);
         return view('Student::student');
     }
 

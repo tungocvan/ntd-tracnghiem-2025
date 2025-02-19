@@ -97,16 +97,15 @@
     </div>
     </form>
 </x-adminlte-alert>
-<x-adminlte-alert>
+{{-- <x-adminlte-alert>
     <div class="row">
         <div class="col">
             <h2>Tạo ngẫu nhiên câu hỏi</h2>
         </div>
     </div>
-</x-adminlte-alert>
+</x-adminlte-alert> --}}
 <x-adminlte-alert>
-    <div class="row">
-   
+    <div class="row">   
         <div class="col-2">
             Đã chọn <strong id="socau">0</strong> câu.
         </div>
@@ -114,9 +113,9 @@
             <form  action="{{ route('quiz.create-setquiz') }}" method="POST">
                 @csrf
             <div class="row">
-                <div class="col-6">
+                {{-- <div class="col-6">
                     <x-adminlte-input name="ten_bode" type="text" placeholder="Tên Bộ Đề..."/>            
-                </div>
+                </div> --}}
                 <div class="col-3">                 
                     <x-adminlte-input name="tg_bode" type="text" placeholder="Thời gian làm bài"/>
                 </div>

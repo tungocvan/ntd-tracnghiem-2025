@@ -194,7 +194,7 @@ class QuizController extends Controller
             'dapan' => $dapan,
             'user_id' => $user_id,
 
-        ];
+        ]; 
 
         if($method == 'POST'){
             dd($questions->where('category_topic_id',$request->monhoc));
@@ -244,6 +244,14 @@ class QuizController extends Controller
             ->get();
 
         //dd($questions);
+        $questionArray = [];
+        foreach($questions as $question){
+            array_push($questionArray,[$question['question_details']]);
+        }
+        //$questionStr = implode(',',$questionArray);
+        $questionStr = json_encode($questionArray,true);
+        // $result = json_decode($questionStr);
+        // dd($result);
         $data = [
             'monhoc' => $category_topic_id,
             'khoilop' => $category_class_id,
@@ -251,8 +259,8 @@ class QuizController extends Controller
             'loaicau' => $question_type,
             'user_id' => $user_id,
             'thoi_gian' => $thoi_gian,
-            'ten_bode' => $ten_bode, 
-            'questions' => $questions
+            // 'ten_bode' => $ten_bode, 
+            'questions' => $questionStr
         ];
 
         dd($data);
@@ -418,7 +426,7 @@ class QuizController extends Controller
 
         return redirect()->route('quiz.settings')->with('success', 'Vui lòng nhập dữ liệu.');
     }
-
+ 
 
 
     /**
