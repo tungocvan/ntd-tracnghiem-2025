@@ -194,7 +194,7 @@ class QuizController extends Controller
             'dapan' => $dapan,
             'user_id' => $user_id,
 
-        ]; 
+        ];
 
         if($method == 'POST'){
             dd($questions->where('category_topic_id',$request->monhoc));
@@ -208,9 +208,14 @@ class QuizController extends Controller
         // Lấy bộ đề theo ID
         $questionSet = QuestionSet::find($id);
         $timeRemaining = $questionSet->timeRemaining;
+        //dd(json_encode(unserialize($questionSet->questions),true));
         // Chuyển đổi câu hỏi từ định dạng chuỗi thành mảng
-        $questions = parseQuestions($questionSet->questions);
-        // dd($questions);
+        $quests= json_encode(unserialize($questionSet->questions),true);
+        //$questions = parseQuestions($quests);
+       //dd($quests);
+       $questions = parseQuestions($questionSet->questions);
+        //$questions = unserialize($questionSet->questions);
+        dd($questions);
         // $questions = Question::all();
         // foreach ($questions as $question) {
         //     $question->parsed_details = parseQuestionDetails($question->question_details);
@@ -249,7 +254,9 @@ class QuizController extends Controller
             array_push($questionArray,[$question['question_details']]);
         }
         //$questionStr = implode(',',$questionArray);
-        $questionStr = json_encode($questionArray,true);
+       // $questionStr = json_encode($questionArray,true);
+        $questionStr = serialize($questionArray);
+
         // $result = json_decode($questionStr);
         // dd($result);
         $data = [
@@ -259,7 +266,7 @@ class QuizController extends Controller
             'loaicau' => $question_type,
             'user_id' => $user_id,
             'thoi_gian' => $thoi_gian,
-            // 'ten_bode' => $ten_bode, 
+            // 'ten_bode' => $ten_bode,
             'questions' => $questionStr
         ];
 
@@ -426,7 +433,7 @@ class QuizController extends Controller
 
         return redirect()->route('quiz.settings')->with('success', 'Vui lòng nhập dữ liệu.');
     }
- 
+
 
 
     /**
