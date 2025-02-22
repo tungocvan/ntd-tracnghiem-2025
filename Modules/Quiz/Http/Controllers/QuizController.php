@@ -303,7 +303,7 @@ class QuizController extends Controller
         // Lấy danh sách câu hỏi để kiểm tra đáp án
         $questionSet = QuestionSet::find($id);
         $questions = parseQuestions($questionSet->questions);
-
+       // $questions = json_decode($questionSet->questions,true);
         // Đáp án đã chọn của người dùng
         $userAnswers = $request->input('answers');
 
