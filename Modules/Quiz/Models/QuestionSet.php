@@ -11,7 +11,7 @@ class QuestionSet extends Model
     // protected $connection = 'wordpress';
     protected $table = 'question_sets';
     // protected $primaryKey = 'ID';
-    // protected $fillable = [];
+    protected $fillable = ['user_id','name','category_topic_id','category_class_id','question_type','questions','total_questions','timeRemaining'];
     // protected $hidden = [];
     // public $timestamps = true;
     // const CREATED_AT ="created_at";

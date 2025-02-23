@@ -131,6 +131,7 @@ class QuizController extends Controller
                 'user_id' => $user_id,
                 'questions' => $questions
             ];
+         
             //dd($data);
             return view('Quiz::bode.topic-set-add',compact('data','category_topic_id','category_class_id','question_level','question_type'));
         }
@@ -207,15 +208,10 @@ class QuizController extends Controller
 
         // Lấy bộ đề theo ID
         $questionSet = QuestionSet::find($id);
-        $timeRemaining = $questionSet->timeRemaining;
-        //dd(json_encode(unserialize($questionSet->questions),true));
-        // Chuyển đổi câu hỏi từ định dạng chuỗi thành mảng
-        $quests= json_encode(unserialize($questionSet->questions),true);
-        //$questions = parseQuestions($quests);
-       //dd($quests);
-       $questions = parseQuestions($questionSet->questions);
+        $timeRemaining = $questionSet->timeRemaining;    
+        $questions = parseQuestions($questionSet->questions);
         //$questions = unserialize($questionSet->questions);
-        dd($questions);
+        //  dd($questions);
         // $questions = Question::all();
         // foreach ($questions as $question) {
         //     $question->parsed_details = parseQuestionDetails($question->question_details);
@@ -236,6 +232,7 @@ class QuizController extends Controller
         $category_class_id = $request['bd_khoilop'];
         $question_level = $request['bd_capdo'];
         $question_type = $request['bd_loaicau'];
+        $total_questions = $request['bd_socau'];
         $thoi_gian = $request['tg_bode'];
         $ten_bode = $request['ten_bode'];
         $id_bode = json_decode($request['bo_de'],true);
@@ -253,22 +250,30 @@ class QuizController extends Controller
         foreach($questions as $question){
             array_push($questionArray,[$question['question_details']]);
         }
-        //$questionStr = implode(',',$questionArray);
+        $result = array_map(function($item) {
+            return $item[0];
+        }, $questionArray);
+    
+        $questionStr = implode(',',$result);
        // $questionStr = json_encode($questionArray,true);
-        $questionStr = serialize($questionArray);
+        //$questionStr = serialize($questionArray);
 
         // $result = json_decode($questionStr);
         // dd($result);
         $data = [
-            'monhoc' => $category_topic_id,
-            'khoilop' => $category_class_id,
-            'capdo' => $question_level,
-            'loaicau' => $question_type,
+            'category_topic_id' => $category_topic_id,
+            'category_class_id' => $category_class_id,
+            'question_type' => $question_type,
             'user_id' => $user_id,
-            'thoi_gian' => $thoi_gian,
-            // 'ten_bode' => $ten_bode,
+            'timeRemaining' => $thoi_gian,
+            'name' => $ten_bode,
+            'total_questions' => count($result),
             'questions' => $questionStr
         ];
+
+       
+        $question = questionSet::create($data);
+        return redirect()->route('quiz.topic-set-list')->with('success', 'Đã thêm bộ đề thành công.');
 
         dd($data);
 

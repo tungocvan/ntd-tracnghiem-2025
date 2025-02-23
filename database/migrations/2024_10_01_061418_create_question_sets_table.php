@@ -11,11 +11,12 @@ class CreateQuestionSetsTable extends Migration
         Schema::create('question_sets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name');
-            $table->string('category_ids');
+            $table->string('name'); // bộ đề
+            $table->string('category_topic_id'); // môn học
+            $table->string('category_class_id'); // khối lớp
             $table->enum('question_type', ['Đúng/Sai', 'Một đáp án', 'Nhiều đáp án', 'Tự luận']);
             $table->text('questions');
-            $table->unsignedInteger('total_questions');
+            $table->unsignedInteger('total_questions');            
             $table->unsignedInteger('timeRemaining');
             $table->timestamps();
         });

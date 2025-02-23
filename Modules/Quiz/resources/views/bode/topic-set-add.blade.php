@@ -106,16 +106,17 @@
 </x-adminlte-alert> --}}
 <x-adminlte-alert>
     <div class="row">   
+        <form  action="{{ route('quiz.create-setquiz') }}" method="POST">
+            @csrf
         <div class="col-2">
             Đã chọn <strong id="socau">0</strong> câu.
         </div>
-        <div class="col-5">
-            <form  action="{{ route('quiz.create-setquiz') }}" method="POST">
-                @csrf
+        <div class="col-10">
+            
             <div class="row">
-                {{-- <div class="col-6">
+                <div class="col-6">
                     <x-adminlte-input name="ten_bode" type="text" placeholder="Tên Bộ Đề..."/>            
-                </div> --}}
+                </div>
                 <div class="col-3">                 
                     <x-adminlte-input name="tg_bode" type="text" placeholder="Thời gian làm bài"/>
                 </div>
@@ -131,8 +132,9 @@
             <input type="hidden"  name="bd_capdo" value="{{$question_level ?? ''}}" />
             <input type="hidden"  name="bd_loaicau" value="{{$question_type ?? ''}}" />
             
-            </form>
+           
         </div>
+      </form>
     </div>
 </x-adminlte-alert>
 @if(count($questions) > 0 )
