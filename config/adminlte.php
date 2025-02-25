@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '#',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -300,9 +300,9 @@ return [
             'text' => 'search',
             'topnav_right' => true,
             'url' => 'navbar/search',
-            'method' => 'post', 
+            'method' => 'post',
             'input_name' => 'searchVal',
-            'id' => 'navbarSearch' 
+            'id' => 'navbarSearch'
         ],
         [
             'type' => 'fullscreen-widget',
@@ -345,9 +345,13 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
+        // [
+        //     'text' => 'Dashboard',
+        //     'url' => 'admin',
+        // ],
         [
-            'text' => 'Dashboard',
-            'url' => 'admin',      
+            'text' => 'Luyện Tập',
+            'url' => 'student',
         ],
         // [
         //     'text' => 'Manage Product',
@@ -356,7 +360,7 @@ return [
         //     'label' => 4,
         //     'label_color' => 'success',
         // ],
-        ['header' => 'QUẢN TRỊ TRẮC NGHIỆM'],    
+        ['header' => 'QUẢN TRỊ TRẮC NGHIỆM'],
         [
             'text' => 'Quản trị câu hỏi',
             'url' => 'admin/quiz-list',
@@ -365,7 +369,7 @@ return [
         ],
         [
             'text' => 'Quản trị bộ đề',
-            'url' => '#', 
+            'url' => '#',
             'icon' => 'fas fa-fw fa-user',
             'can' => 'user-list',
             'submenu' => [
@@ -373,20 +377,20 @@ return [
                     'text' => 'Danh sách Bộ đề',
                     'icon' => 'fas fa-fw fa-user',
                     'url' => 'admin/topic-set-list',
-                ],               
+                ],
                 [
                     'text' => 'Tạo mới Bộ đề',
                     'icon' => 'fas fa-fw fa-user',
                     'url' => 'admin/topic-set-add',
-                ],               
+                ],
             ],
         ],
-        [
-            'text' => 'Quản trị chuyên mục',
-            'url' => 'admin/category/quiz',
-            'icon' => 'fas fa-fw fa-user',
-            'can' => 'user-list',
-        ],
+        // [
+        //     'text' => 'Quản trị chuyên mục',
+        //     'url' => 'admin/category/quiz',
+        //     'icon' => 'fas fa-fw fa-user',
+        //     'can' => 'user-list',
+        // ],
         [
             'text' => 'Cấu hình chung',
             'url' => 'admin/quiz/settings',

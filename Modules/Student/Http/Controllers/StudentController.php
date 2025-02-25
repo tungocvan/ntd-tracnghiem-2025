@@ -3,6 +3,8 @@
 namespace Modules\Student\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Option;
+use Modules\Quiz\Models\QuestionSet;
 
 class StudentController extends Controller
 {
@@ -19,8 +21,44 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $user = $request->user()->getRoleNames()[0];
+        $monhoc = Option::get_option('quiz_monhoc', []);
+        $khoilop = Option::get_option('quiz_khoilop', []);
+        $capdo = Option::get_option('quiz_capdo', []);
+        $loaicau = Option::get_option('quiz_loaicau', []);
+        $dapan = Option::get_option('quiz_dapan', []);
+        $user_id = $request->user()->id;
+        $questionSet = QuestionSet::all();
+        foreach ($questionSet as $key => $question) {
+
+            $questionSet[$key]['category_topic_id'] = $monhoc[$question->category_topic_id];
+            $questionSet[$key]['category_class_id'] = $khoilop[$question->category_class_id];
+            // $btnEdit = "<button type='submit' class='btn btn-xs btn-default text-primary mx-1 shadow' name='edit' value='".$questionSet[$key]['id']."'>
+            //     <i class='fa fa-lg fa-fw fa-pen'></i></button>";
+            $btnEdit='';
+            $btnDelete = "";
+            // $btnDelete = "<button type='submit' class='btn btn-xs btn-default text-danger mx-1 shadow'  name='delete' value='$question->id'>
+            //     <i class='fa fa-lg fa-fw fa-trash'></i></button>";
+            $btnDetails = "<a class='btn btn-xs btn-default text-teal mx-1 shadow'  name='detail' href='/admin/question-set/$question->id'>
+                Luyện tập</a>";
+            // $btnDetails = "<button type='submit' class='btn btn-xs btn-default text-teal mx-1 shadow'  name='detail' value='".$questionSet[$key]['id']."'>
+            //     <i class='fa fa-lg fa-fw fa-eye'></i></button>";
+
+            $questionSet[$key]['action'] = $btnDetails.$btnEdit.$btnDelete  ;
+        }
+        //dd($questionSet);
+
+        $data = [
+            'monhoc' => $monhoc,
+            'khoilop' => $khoilop,
+            'capdo' => $capdo ,
+            'loaicau' => $loaicau,
+            'dapan' => $dapan,
+            'user_id' => $user_id,
+            'questionSet' => $questionSet
+        ];
+
         //dd($user);
-        return view('Student::student');
+        return view('Student::student',compact('data'));
     }
 
     /**

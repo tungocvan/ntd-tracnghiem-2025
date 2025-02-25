@@ -10,9 +10,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\SearchController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [HomeController::class, 'index']);
 
 Auth::routes();
 
@@ -34,5 +36,5 @@ Route::middleware(['auth'])->prefix('/admin')->name('admin.')->group(function(){
 });
 
 Route::get('notifications/get',[NotificationsController::class, 'getNotificationsData'])->name('notifications.get');
-Route::get('navbar/search',[SearchController::class,'showNavbarSearchResults']);    
-Route::post('navbar/search',[SearchController::class,'showNavbarSearchResults']);    
+Route::get('navbar/search',[SearchController::class,'showNavbarSearchResults']);
+Route::post('navbar/search',[SearchController::class,'showNavbarSearchResults']);

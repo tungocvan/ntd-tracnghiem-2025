@@ -131,7 +131,7 @@ class QuizController extends Controller
                 'user_id' => $user_id,
                 'questions' => $questions
             ];
-         
+
             //dd($data);
             return view('Quiz::bode.topic-set-add',compact('data','category_topic_id','category_class_id','question_level','question_type'));
         }
@@ -142,6 +142,13 @@ class QuizController extends Controller
     public function topicSetList(Request $request)
     {
 
+
+        if($request->delete){
+            $questions = QuestionSet::find($request->delete);
+            $questions->delete();
+            return redirect()->route('quiz.topic-set-list')
+                        ->with('success','QuestionSet deleted successfully');
+        }
         $user_id = $request->user()->id;
         $monhoc = Option::get_option('quiz_monhoc', []);
         $khoilop = Option::get_option('quiz_khoilop', []);
@@ -151,10 +158,32 @@ class QuizController extends Controller
 
 
 
-        $questions = Question::all();
-        foreach ($questions as $question) {
-            $question->parsed_details = parseQuestionDetails($question->question_details);
+        $questionSet = QuestionSet::all();
+        //dd($questionSet);
+
+        // $questions = Question::all();
+        // foreach ($questions as $question) {
+        //     $question->parsed_details = parseQuestionDetails($question->question_details);
+        // }
+
+
+        foreach ($questionSet as $key => $question) {
+
+            $questionSet[$key]['category_topic_id'] = $monhoc[$question->category_topic_id];
+            $questionSet[$key]['category_class_id'] = $khoilop[$question->category_class_id];
+            // $btnEdit = "<button type='submit' class='btn btn-xs btn-default text-primary mx-1 shadow' name='edit' value='".$questionSet[$key]['id']."'>
+            //     <i class='fa fa-lg fa-fw fa-pen'></i></button>";
+            $btnEdit='';
+            $btnDelete = "<button type='submit' class='btn btn-xs btn-default text-danger mx-1 shadow'  name='delete' value='$question->id'>
+                <i class='fa fa-lg fa-fw fa-trash'></i></button>";
+            $btnDetails = "<a class='btn btn-xs btn-default text-teal mx-1 shadow'  name='detail' href='/admin/question-set/$question->id'>
+                <i class='fa fa-lg fa-fw fa-eye'></i></a>";
+            // $btnDetails = "<button type='submit' class='btn btn-xs btn-default text-teal mx-1 shadow'  name='detail' value='".$questionSet[$key]['id']."'>
+            //     <i class='fa fa-lg fa-fw fa-eye'></i></button>";
+
+            $questionSet[$key]['action'] = $btnDetails.$btnEdit.$btnDelete  ;
         }
+        //dd($questionSet);
 
         $data = [
             'monhoc' => $monhoc,
@@ -163,9 +192,10 @@ class QuizController extends Controller
             'loaicau' => $loaicau,
             'dapan' => $dapan,
             'user_id' => $user_id,
-            'questions' => $questions
+            'questionSet' => $questionSet
         ];
 
+        //dd($data);
         return view('Quiz::bode.topic-set-list',compact('data'));
     }
     public function topicSetAdd(Request $request)
@@ -208,7 +238,7 @@ class QuizController extends Controller
 
         // Lấy bộ đề theo ID
         $questionSet = QuestionSet::find($id);
-        $timeRemaining = $questionSet->timeRemaining;    
+        $timeRemaining = $questionSet->timeRemaining;
         $questions = parseQuestions($questionSet->questions);
         //$questions = unserialize($questionSet->questions);
         //  dd($questions);
@@ -253,7 +283,7 @@ class QuizController extends Controller
         $result = array_map(function($item) {
             return $item[0];
         }, $questionArray);
-    
+
         $questionStr = implode(',',$result);
        // $questionStr = json_encode($questionArray,true);
         //$questionStr = serialize($questionArray);
@@ -271,7 +301,7 @@ class QuizController extends Controller
             'questions' => $questionStr
         ];
 
-       
+
         $question = questionSet::create($data);
         return redirect()->route('quiz.topic-set-list')->with('success', 'Đã thêm bộ đề thành công.');
 

@@ -7,6 +7,7 @@ Route::middleware(['web','auth'])->prefix('/admin')->name('quiz.')->group(functi
     Route::get('/quiz-list', [QuizController::class,'quizList'])->name('quiz-list');
     Route::post('/submit-list', [QuizController::class,'submitList'])->name('submit-list');
     Route::get('/topic-set-list', [QuizController::class,'topicSetList'])->name('topic-set-list');
+    Route::post('/submit-topic-set-list', [QuizController::class,'topicSetList'])->name('submit-topic-set-list');
     Route::get('/topic-set-add', [QuizController::class,'topicSetAdd'])->name('topic-set-add');
     Route::get('/question-set/{id}', [QuizController::class,'questionSet'])->name('question-set');
     Route::post('/submit', [QuizController::class,'submit'])->name('submit');
