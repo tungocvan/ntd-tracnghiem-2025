@@ -28,21 +28,27 @@ if (! function_exists('convertMdyToYmd')) {
 
 function parseQuestionDetails($questionDetails) {
     // Loại bỏ dấu [] bao quanh các phần tử
-    preg_match('/\[(.*?)\]\[(.*?)\]\[(.*?)\]/', $questionDetails, $matches);
+    //dd($questionDetails);
+    //preg_match('/\[(.*?)\]\[(.*?)\]\[(.*?)\]/', $questionDetails, $matches);
+    preg_match('/\[(.*?)\]\[(.*?)\]\[(.*?)\]/s', $questionDetails, $matches);
+
+   //dd($matches);
 
     // Kiểm tra nếu có đúng 3 nhóm kết quả: content, answers, correct_answers
     if (count($matches) === 4) {
         // Phân tách từng phần
         $content = $matches[1]; // Nội dung câu hỏi
         $answers = explode('|', $matches[2]); // Các đáp án
-        $correct_answers = explode(',', $matches[3]); // Đáp án đúng
-
+        $correct_answers = $matches[3]; // Đáp án đúng
+        //dd($correct_answers);
         // Trả về mảng kết quả
-        return [
+        $result =  [
             'content' => $content,
             'answers' => $answers,
-            'correct_answers' => array_map('intval', $correct_answers) // Chuyển các vị trí đáp án đúng thành số nguyên
+            'correct_answers' => $correct_answers, // Chuyển các vị trí đáp án đúng thành số nguyên
         ];
+
+        return $result;
     }
 
     // Nếu chuỗi không đúng định dạng, trả về null hoặc thông báo lỗi

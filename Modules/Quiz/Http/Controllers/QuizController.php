@@ -37,12 +37,16 @@ class QuizController extends Controller
         $capdo = Option::get_option('quiz_capdo', []);
         $loaicau = Option::get_option('quiz_loaicau', []);
         $dapan = Option::get_option('quiz_dapan', []);
-
+        //dd($questions);
         foreach ($questions as $question) {
+
+
             $question->parsed_details = parseQuestionDetails($question->question_details);
             $question->name_topic = $monhoc[$question->category_topic_id];
             $question->name_class = $khoilop[$question->category_class_id];
-            $question->content = $question->parsed_details['content'];
+            //dd($question);
+            //dd(is_string($question->parsed_details['content']));
+            $question->content = $question->parsed_details['content'] ?? '';
             $btnEdit = "<button type='submit' class='btn btn-xs btn-default text-primary mx-1 shadow' name='edit' value='".$question->id."'>
                 <i class='fa fa-lg fa-fw fa-pen'></i></button>";
             $btnDelete = "<button type='submit' class='btn btn-xs btn-default text-danger mx-1 shadow'  name='delete' value='".$question->id."'>
@@ -522,7 +526,7 @@ class QuizController extends Controller
             'user_id' => $request->user_id,
             'category_class_id' => $request->khoilop,
             'category_topic_id' => $request->monhoc,
-            'question_details' => "[$request->content][$request->dapan1]|$request->dapan2|$request->dapan3|$request->dapan4][$request->dapan]",
+            'question_details' => "[$request->content][$request->dapan1|$request->dapan2|$request->dapan3|$request->dapan4][$request->dapan]",
             'question_type' => $request->capdo,
             'question_level' => $request->loaicau
         ];
@@ -667,10 +671,12 @@ class QuizController extends Controller
                 'loaicau' => $loaicau,
                 'dapan' => $dapan,
                 'user_id' => $user_id,
-                'question_details' => serialize($question_details),
+                'question_details' => json_encode($question_details,true),
                 'dataQuestion' => $dataQuestion[0]
             ];
         }
+
+
 
         return view('Quiz::quiz-import',compact('data'));
     }
@@ -699,10 +705,18 @@ class QuizController extends Controller
         }
 
 
-        $Question = unserialize($request->question_details);
+       // $string = $request->question_details;
+        //$string = substr($string, 3);
+       // dd($request->question_details);
+       //dd($string);
+       // dd(json_decode($request->question_details,true));
+
+        $Question = json_decode($request->question_details,true);
+        //dd($Question);
         $capdo = Option::get_option('quiz_capdo', []);
         $loaicau = Option::get_option('quiz_loaicau', []);
         foreach ($Question as $key => $value) {
+
             $question = [
                 'user_id' => $request->user_id,
                 'category_class_id' => $request->khoilop,
@@ -711,10 +725,12 @@ class QuizController extends Controller
                 'question_type' =>  $loaicau[$request->loaicau],
                 'question_level' =>$capdo[$request->capdo]
             ];
+            // echo $value. "<br />";
             //dd($question);
-            Question::create($question);
+           Question::create($question);
         }
 
+        //dd('o');
         return redirect()->route('quiz.quiz-list')->with('success', 'Đã thêm câu hỏi thành công.');
 
     }
