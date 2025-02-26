@@ -18,8 +18,9 @@ class AdminController extends Controller
     }
     public function index()
     {
-
+        //return redirect()->route('student');
         return view('Admin::admin');
+
     }
     public function component()
     {

@@ -314,26 +314,26 @@ return [
             'icon' => 'fas fa-fw fa-user',
             'topnav_user' => true,
         ],
-        [
-            'text' => 'Settings',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-cog',
-            'topnav_user' => true,
-            'icon_color' => 'primary',
-        ],
-        [
-            'type' => 'navbar-notification',
-            'id' => 'my-notification',
-            'icon' => 'fas fa-bell',
-            'url' => 'notifications/show',
-            'topnav_right' => true,
-            'dropdown_mode' => true,
-            'dropdown_flabel' => 'All notifications',
-            'update_cfg' => [
-                'url' => 'notifications/get',
-                'period' => 30,
-            ],
-        ],
+        // [
+        //     'text' => 'Settings',
+        //     'url' => 'admin/settings',
+        //     'icon' => 'fas fa-fw fa-cog',
+        //     'topnav_user' => true,
+        //     'icon_color' => 'primary',
+        // ],
+        // [
+        //     'type' => 'navbar-notification',
+        //     'id' => 'my-notification',
+        //     'icon' => 'fas fa-bell',
+        //     'url' => 'notifications/show',
+        //     'topnav_right' => true,
+        //     'dropdown_mode' => true,
+        //     'dropdown_flabel' => 'All notifications',
+        //     'update_cfg' => [
+        //         'url' => 'notifications/get',
+        //         'period' => 30,
+        //     ],
+        // ],
 
         // Sidebar items:
         [

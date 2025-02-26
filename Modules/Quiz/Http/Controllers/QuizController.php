@@ -350,8 +350,10 @@ class QuizController extends Controller
         $userAnswers = $request->input('answers');
 
         // Lưu kết quả cho mỗi câu hỏi
-        $results = [];
+        $results = [];$total=[];
         //dd($questions);
+        $tile = 0;
+        $noAnswer = 0; $right= 0; $wrong = 0;
         foreach ($questions as $index => $question) {
             $correctAnswer = $question['correct_answer'];
             $userAnswer = isset($userAnswers[$index]) ? $userAnswers[$index] : null;
@@ -367,9 +369,24 @@ class QuizController extends Controller
                 'user_answer' => $userAnswer,
                 'is_correct' => $isCorrect,
             ];
+            if($userAnswer !==null ){
+                if($isCorrect == true){
+                    $right = $right +1;
+                }else{
+                    $wrong = $wrong +1;
+                }
+            }else{
+                $noAnswer=$noAnswer + 1;
+            }
         }
+        $total['right']= $right;
+        $total['wrong']= $wrong;
+        $total['noAnswer']= $noAnswer;
+        $total['total']= ($right+ $wrong+$noAnswer);
+        $total['tile']= $right/($right+ $wrong+$noAnswer)*100;
+        //dd($results);
         // Trả về view kết quả
-        return view('Quiz::result-set', ['results' => $results]);
+        return view('Quiz::result-set', ['results' => $results,'total' => $total]);
     }
 
     public function settings(Request $request)

@@ -26,18 +26,18 @@ class HomeController extends Controller
         $roleName = $request->user()->getRoleNames()[0];
         switch ($roleName) {
             case 'Admin':
-                return redirect()->route('admin.index');
-            
+                return redirect()->route('student.index');
+
             case 'Teacher':
                 return redirect()->route('teacher.index');
             case 'Student':
                 return redirect()->route('student.index');
-            
+
             default:
                  return view('home');
         }
-     
-       
+
+
     }
     public function dashboard()
     {

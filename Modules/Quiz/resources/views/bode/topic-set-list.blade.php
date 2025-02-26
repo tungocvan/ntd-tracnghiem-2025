@@ -48,15 +48,7 @@
 
 @section('content')
 <x-adminlte-alert>
-    <div class="row">
-        <div class="col-md-12">
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-        </div>
-    </div>
+
     <div class="row gx-4">
         <div class="col">
             <x-adminlte-select name="monhoc">
