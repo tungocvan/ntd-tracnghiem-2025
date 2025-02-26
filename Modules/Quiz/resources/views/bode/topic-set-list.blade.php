@@ -47,7 +47,7 @@
 @endphp
 
 @section('content')
-<x-adminlte-alert>
+{{-- <x-adminlte-alert>
 
     <div class="row gx-4">
         <div class="col">
@@ -71,7 +71,7 @@
             </x-adminlte-select>
         </div>
     </div>
-</x-adminlte-alert>
+</x-adminlte-alert> --}}
 <x-adminlte-alert>
     <div class="row">
         <div class="col-md-12">
