@@ -57,6 +57,7 @@
         'buttons' => [$lengthBtn, $excelBtn]
     ];
 @endphp
+
 <x-adminlte-alert>
 
     <div class="row">
@@ -104,6 +105,8 @@
         </div>
     </div>
 </x-adminlte-alert> --}}
+
+@if(count($questions) > 0 )
 <x-adminlte-alert>
     <div class="row">
         <form  action="{{ route('quiz.create-setquiz') }}" method="POST">
@@ -121,7 +124,7 @@
                     <x-adminlte-input name="tg_bode" type="text" placeholder="Thời gian làm bài"/>
                 </div>
                 <div class="col-3">
-                    <button type="submit" name="tao-bo-de" class="btn btn-block btn-outline-success" value="true">Tạo bộ đề</button>
+                    <button type="submit" id="tao-bo-de" name="tao-bo-de" class="btn btn-block btn-outline-success" value="true" disabled>Tạo bộ đề</button>
                 </div>
             </div>
 
@@ -137,7 +140,6 @@
       </form>
     </div>
 </x-adminlte-alert>
-@if(count($questions) > 0 )
 <x-adminlte-alert>
     <div class="row">
         <div class="col-md-12">
@@ -155,6 +157,7 @@
     var bode = [];
     var socau = document.getElementById('socau');
     var dataBode = document.getElementById('data_bo_de');
+    var taobode = document.getElementById('tao-bo-de');
     document.addEventListener('DOMContentLoaded', function(event) {
         document.getElementById('monhoc').addEventListener('change', function(e) {
                  console.log(e.target.value);
@@ -185,6 +188,12 @@
             console.log('bode:',bode);
             dataBode.value = JSON.stringify(bode)
             socau.innerText = bode.length;
+
+            if(parseInt(socau.innerText) === 0){
+                taobode.disabled = true;
+            }else{
+                taobode.disabled = false;
+            }
     }
     function HanlderCheck(cb,id) {
         // console.log('Clicked:',cb.checked);
@@ -193,6 +202,11 @@
         console.log('bode:',bode);
         socau.innerText = bode.length;
         dataBode.value = JSON.stringify(bode)
+        if(parseInt(socau.innerText) === 0){
+                taobode.disabled = true;
+            }else{
+                taobode.disabled = false;
+        }
     }
     function toggleElement(array, id) {
         const index = array.indexOf(id);

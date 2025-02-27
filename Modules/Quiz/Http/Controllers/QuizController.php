@@ -1,18 +1,20 @@
 <?php
 
 namespace Modules\Quiz\Http\Controllers;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Modules\Quiz\Models\Question;
-use Modules\Quiz\Models\QuestionSet;
-use Modules\Category\Models\WpTerm;
-use Modules\Category\Models\WpTermTaxonomy;
-use Illuminate\Support\Str;
-use App\Models\Option;
 use Auth;
-use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Option;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Imports\QuestionImport;
+use Modules\Quiz\Models\Question;
+use Modules\Category\Models\WpTerm;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\Quiz\Models\QuestionSet;
+use Illuminate\Support\Facades\Validator;
+use Modules\Category\Models\WpTermTaxonomy;
+use App\View\Components\Adminlte\Widget\Alert;
+
 
 class QuizController extends Controller
 {
@@ -320,9 +322,9 @@ class QuizController extends Controller
         $question = questionSet::create($data);
         return redirect()->route('quiz.topic-set-list')->with('success', 'Đã thêm bộ đề thành công.');
 
-        dd($data);
+        // dd($data);
 
-        return view('Quiz::quiz-set',compact('questions','id','timeRemaining'));
+        // return view('Quiz::quiz-set',compact('questions','id','timeRemaining'));
     }
 
 
