@@ -21,7 +21,7 @@
             <form  action="{{ route('quiz.quiz-delete') }}" method="POST">
                 @csrf
                 <a href="{{ route('quiz.quiz-add') }}" class="btn  btn-outline-primary ">Thêm mới</a>
-                <button type="submit" name="deleteAll" class="btn  btn-outline-danger">Xóa tất cả</button>
+                <button type="submit" id="deleteAll" name="deleteAll" class="btn  btn-outline-danger" disabled>Xóa tất cả</button>
                 <input type="hidden" id="data_bo_de" name="bo_de" />
             </form>
         </div>
@@ -95,6 +95,7 @@
     var bode = [];
     //var socau = document.getElementById('socau');
     var dataBode = document.getElementById('data_bo_de');
+    var deleteAll = document.getElementById('deleteAll');
     document.addEventListener('DOMContentLoaded', function(event) {
              // Bắt sự kiện chọn tất cả
              document.getElementById('file').addEventListener('change', function() {
@@ -115,19 +116,29 @@
                     }
 
                 });
-                console.log('bode:',bode);
+                //console.log('bode:',bode);
                 dataBode.value = JSON.stringify(bode)
               //  socau.innerText = bode.length;
+              if(parseInt(bode.length) === 0){
+                deleteAll.disabled = true;
+              }else{
+                    deleteAll.disabled = false;
+              }
             }
-            function HanlderCheck(cb,id) {
+     function HanlderCheck(cb,id) {
                 // console.log('Clicked:',cb.checked);
                 // console.log('id:',id);
                 toggleElement(bode,id);
-                console.log('bode:',bode);
+             //   console.log('bode:',bode);
                 //socau.innerText = bode.length;
                 dataBode.value = JSON.stringify(bode)
+                if(parseInt(bode.length) === 0){
+                deleteAll.disabled = true;
+              }else{
+                    deleteAll.disabled = false;
+              }
             }
-            function toggleElement(array, id) {
+    function toggleElement(array, id) {
                 const index = array.indexOf(id);
                 if (index === -1) {
                     // Nếu không tìm thấy phần tử, thêm vào mảng

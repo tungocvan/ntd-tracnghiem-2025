@@ -42,7 +42,6 @@ class QuizController extends Controller
         //dd($questions);
         foreach ($questions as $question) {
 
-
             $question->parsed_details = parseQuestionDetails($question->question_details);
             $question->name_topic = $monhoc[$question->category_topic_id];
             $question->name_class = $khoilop[$question->category_class_id];
@@ -53,8 +52,9 @@ class QuizController extends Controller
                 <i class='fa fa-lg fa-fw fa-pen'></i></button>";
             $btnDelete = "<button type='submit' class='btn btn-xs btn-default text-danger mx-1 shadow'  name='delete' value='".$question->id."'>
                 <i class='fa fa-lg fa-fw fa-trash'></i></button>";
-            $btnDetails = "<button type='submit' class='btn btn-xs btn-default text-teal mx-1 shadow'  name='detail' value='".$question->id."'>
-                <i class='fa fa-lg fa-fw fa-eye'></i></button>";
+            $btnDetails = "";
+            // $btnDetails = "<button type='submit' class='btn btn-xs btn-default text-teal mx-1 shadow'  name='detail' value='".$question->id."'>
+            //     <i class='fa fa-lg fa-fw fa-eye'></i></button>";
 
             $question->action = $btnDetails.$btnEdit.$btnDelete  ;
             $question->checkbox = "<input type='checkbox' class='select-row' name='chk-$question->id' value='$question->id' onclick='HanlderCheck(this,$question->id)' >";
@@ -67,10 +67,7 @@ class QuizController extends Controller
     public function submitList(Request $request)
     {
         //dd($request->all());
-        if($request->monhoc == null || $request->khoilop == null || $request->capdo == null){
-            return redirect()->route('quiz.topic-set-add')
-                        ->with('success','Vui lòng chọn môn học, khối lớp và cấp độ');
-        }
+
         $monhoc = Option::get_option('quiz_monhoc', []);
         $khoilop = Option::get_option('quiz_khoilop', []);
         $capdo = Option::get_option('quiz_capdo', []);
@@ -107,8 +104,7 @@ class QuizController extends Controller
             ];
             return view('Quiz::quiz-edit',compact('questions','data'));
         }
-        //dd($request->all());
-        //echo "edit";
+
         if($request['loc-cau-hoi'] == "true"){
             $category_topic_id = $request['monhoc'];
             $category_class_id = $request['khoilop'];
@@ -149,8 +145,11 @@ class QuizController extends Controller
             //dd($data);
             return view('Quiz::bode.topic-set-add',compact('data','category_topic_id','category_class_id','question_level','question_type'));
         }
+        if($request->monhoc == null || $request->khoilop == null || $request->capdo == null){
+            return redirect()->route('quiz.topic-set-add')
+                        ->with('success','Vui lòng chọn môn học, khối lớp và cấp độ');
+        }
 
-        //return view('Quiz::quiz-list',compact('questions'));
     }
 
     public function topicSetList(Request $request)

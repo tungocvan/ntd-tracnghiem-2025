@@ -160,16 +160,16 @@
     var taobode = document.getElementById('tao-bo-de');
     document.addEventListener('DOMContentLoaded', function(event) {
         document.getElementById('monhoc').addEventListener('change', function(e) {
-                 console.log(e.target.value);
+               //  console.log(e.target.value);
         });
         document.getElementById('khoilop').addEventListener('change', function(e) {
-                 console.log(e.target.value);
+                // console.log(e.target.value);
         });
         document.getElementById('capdo').addEventListener('change', function(e) {
-                 console.log(e.target.value);
+              //   console.log(e.target.value);
         });
         document.getElementById('loaicau').addEventListener('change', function(e) {
-                 console.log(e.target.value);
+               //  console.log(e.target.value);
         });
     });
     function toggleSelectAll(source) {
@@ -185,7 +185,7 @@
                 }
 
             });
-            console.log('bode:',bode);
+           // console.log('bode:',bode);
             dataBode.value = JSON.stringify(bode)
             socau.innerText = bode.length;
 
@@ -199,7 +199,7 @@
         // console.log('Clicked:',cb.checked);
         // console.log('id:',id);
         toggleElement(bode,id);
-        console.log('bode:',bode);
+        //console.log('bode:',bode);
         socau.innerText = bode.length;
         dataBode.value = JSON.stringify(bode)
         if(parseInt(socau.innerText) === 0){
