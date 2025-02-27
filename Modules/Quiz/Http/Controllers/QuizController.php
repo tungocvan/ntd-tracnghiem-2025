@@ -66,7 +66,7 @@ class QuizController extends Controller
     }
     public function submitList(Request $request)
     {
-        //dd($request->all());
+
 
         $monhoc = Option::get_option('quiz_monhoc', []);
         $khoilop = Option::get_option('quiz_khoilop', []);
@@ -109,7 +109,10 @@ class QuizController extends Controller
             $category_topic_id = $request['monhoc'];
             $category_class_id = $request['khoilop'];
             $question_level = $capdo[$request['capdo']];
+            $question_level_id = $request['capdo'];
             $question_type = $loaicau[$request['loaicau']];
+            $question_type_id = $request['loaicau'];
+
             //dd($request->all());
             $questions = Question::where('category_topic_id',$category_topic_id)
             ->where('category_class_id',$category_class_id)
@@ -126,9 +129,13 @@ class QuizController extends Controller
                     $question->action = "<input type='checkbox' class='select-row' name='chk-$question->id' value='$question->id' onclick='HanlderCheck(this,$question->id)' >";
                 }
             }else{
-                 //dd($request->all());
-                 return redirect()->route('quiz.topic-set-add')
-                 ->with('success','Không có câu hỏi phù hợp.');
+
+               return redirect()->route('quiz.topic-set-add')->with([
+                    'category_topic_id' => $category_topic_id,
+                    'category_class_id' => $category_class_id,
+                    'question_level_id' => $question_level_id,
+                    'question_type_id'  => $question_type_id,
+                ])->with('success','Không có câu hỏi phù hợp.');
             }
 
 
@@ -143,7 +150,7 @@ class QuizController extends Controller
             ];
 
             //dd($data);
-            return view('Quiz::bode.topic-set-add',compact('data','category_topic_id','category_class_id','question_level','question_type'));
+            return view('Quiz::bode.topic-set-add',compact('data','category_topic_id','category_class_id','question_level_id','question_type_id'));
         }
         if($request->monhoc == null || $request->khoilop == null || $request->capdo == null){
             return redirect()->route('quiz.topic-set-add')
@@ -215,7 +222,6 @@ class QuizController extends Controller
     {
 
         $method = $request->method();
-
         $user_id = $request->user()->id;
         $monhoc = Option::get_option('quiz_monhoc', []);
         $khoilop = Option::get_option('quiz_khoilop', []);
