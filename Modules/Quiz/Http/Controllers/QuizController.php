@@ -55,18 +55,22 @@ class QuizController extends Controller
                 <i class='fa fa-lg fa-fw fa-eye'></i></button>";
 
             $question->action = $btnDetails.$btnEdit.$btnDelete  ;
+            $question->checkbox = "<input type='checkbox' class='select-row' name='chk-$question->id' value='$question->id' onclick='HanlderCheck(this,$question->id)' >";
         }
 
-        $questions = $questions->select('id','content','name_topic','name_class','question_level','question_type','action');
+        $questions = $questions->select('id','content','name_topic','name_class','question_level','question_type','action','checkbox');
         //dd($questions);
         return view('Quiz::quiz-list',compact('questions'));
     }
     public function submitList(Request $request)
     {
+<<<<<<< HEAD
         
         if($request->monhoc == null || $request->khoilop == null ||  $request->capdo == null){
             return redirect()->route('quiz.topic-set-add')->with('success', 'Chưa chọ môn học hoặc khối lóp, cấp độ');
         }
+=======
+>>>>>>> 6c7e8c15 (27022025-1)
         //dd($request->all());
         $monhoc = Option::get_option('quiz_monhoc', []);
         $khoilop = Option::get_option('quiz_khoilop', []);
@@ -633,9 +637,26 @@ class QuizController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function quizDelete(string $id)
+    public function quizDelete(Request $request)
     {
-        dd($id);
+        if($request->bo_de == null){
+            return redirect()->route('quiz.quiz-list')
+                ->with('success','Vui lòng chọn câu hỏi để xóa !');
+        }
+        if(strlen($request->bo_de) > 4 ){
+            $cauhoiArray = json_decode($request->bo_de,true);
+            if(count($cauhoiArray) > 0){
+                foreach($cauhoiArray as $cauhoi){
+                        $questions = Question::find($cauhoi);
+                        $questions->delete();
+                }
+                return redirect()->route('quiz.quiz-list')
+                ->with('success','Question deleted successfully');
+
+            }
+            //dd($cauhoiArray);
+       }
+         //dd(strlen($request->bo_de));
     }
     public function quizImport(Request $request)
     {

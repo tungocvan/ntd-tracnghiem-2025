@@ -18,8 +18,12 @@
     <h5>DANH SÁCH CÂU HỎI</h5>
     <div class="row">
         <div class="col-3">
-            <a href="{{ route('quiz.quiz-add') }}" class="btn  btn-outline-primary ">Thêm mới</a>
-            <a href="{{ route('quiz.quiz-add') }}" class="btn  btn-outline-danger">Xóa tất cả</a>
+            <form  action="{{ route('quiz.quiz-delete') }}" method="POST">
+                @csrf
+                <a href="{{ route('quiz.quiz-add') }}" class="btn  btn-outline-primary ">Thêm mới</a>
+                <button type="submit" name="deleteAll" class="btn  btn-outline-danger">Xóa tất cả</button>
+                <input type="hidden" id="data_bo_de" name="bo_de" />
+            </form>
         </div>
         <div class="col-4 d-flex">
             <form id="importForm"  action="{{ route('quiz.quiz-import') }}" method="POST" enctype="multipart/form-data" class="d-flex">
@@ -42,6 +46,7 @@
 
 @php
     $heads = [
+        ['label' => '<input type="checkbox" onclick="toggleSelectAll(this)">', 'no-export' => true, 'width' => 2],
         'ID',
         'Nội dung câu hỏi',
         'Môn học',
@@ -53,17 +58,18 @@
 
     $config = [
         'data' => $questions,
-        'order' => [[0, 'desc']],
+        'order' => [[1, 'desc']],
         'columns' => [
+            ['orderable' => false,'data' => 'checkbox'],
             ['data' => 'id','name' => 'id'],
             ['data' => 'content','name' => 'content'],
             ['data' => 'name_topic'],
             ['data' => 'name_class'],
             ['data' => 'question_level'],
             ['data' => 'question_type'],
-            ['orderable' => false, 'data' => 'action'],
+            ['orderable' => false,'data' => 'action'],
         ],
-        'fixedHeader' => true,  
+        'fixedHeader' => true,
     ];
   // dd($config['data']);
 @endphp
@@ -86,12 +92,52 @@
     </div>
 </x-adminlte-alert>
 <script>
+    var bode = [];
+    //var socau = document.getElementById('socau');
+    var dataBode = document.getElementById('data_bo_de');
     document.addEventListener('DOMContentLoaded', function(event) {
              // Bắt sự kiện chọn tất cả
              document.getElementById('file').addEventListener('change', function() {
                     document.getElementById('importForm').submit();
              });
+
     });
+    function toggleSelectAll(source) {
+                const checkboxes = document.querySelectorAll('#table7 tbody input[type="checkbox"]');
+                bode=[];
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = source.checked
+                    if(checkbox.checked == true){
+                        //console.log(checkbox.value);
+                        bode.push(parseInt(checkbox.value))
+                    }else{
+                        bode=[];
+                    }
+
+                });
+                console.log('bode:',bode);
+                dataBode.value = JSON.stringify(bode)
+              //  socau.innerText = bode.length;
+            }
+            function HanlderCheck(cb,id) {
+                // console.log('Clicked:',cb.checked);
+                // console.log('id:',id);
+                toggleElement(bode,id);
+                console.log('bode:',bode);
+                //socau.innerText = bode.length;
+                dataBode.value = JSON.stringify(bode)
+            }
+            function toggleElement(array, id) {
+                const index = array.indexOf(id);
+                if (index === -1) {
+                    // Nếu không tìm thấy phần tử, thêm vào mảng
+                    array.push(id);
+                } else {
+                    // Nếu tìm thấy phần tử, xóa khỏi mảng
+                    array.splice(index, 1);
+                }
+                return array;
+            }
 </script>
 @stop
 
