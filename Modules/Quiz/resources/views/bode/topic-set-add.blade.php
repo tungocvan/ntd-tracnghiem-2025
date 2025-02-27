@@ -92,7 +92,7 @@
             </x-adminlte-select>
         </div>
         <div class="col">
-            <button type="submit" name="loc-cau-hoi" class="btn btn-block btn-outline-success" value="true">Submit</button>
+            <button type="submit" name="loc-cau-hoi" class="btn btn-block btn-outline-success" value="true">Hiển thị câu hỏi</button>
         </div>
     </div>
     </form>
@@ -105,34 +105,34 @@
     </div>
 </x-adminlte-alert> --}}
 <x-adminlte-alert>
-    <div class="row">   
+    <div class="row">
         <form  action="{{ route('quiz.create-setquiz') }}" method="POST">
             @csrf
         <div class="col-2">
             Đã chọn <strong id="socau">0</strong> câu.
         </div>
         <div class="col-10">
-            
+
             <div class="row">
                 <div class="col-6">
-                    <x-adminlte-input name="ten_bode" type="text" placeholder="Tên Bộ Đề..."/>            
+                    <x-adminlte-input name="ten_bode" type="text" placeholder="Tên Bộ Đề..."/>
                 </div>
-                <div class="col-3">                 
+                <div class="col-3">
                     <x-adminlte-input name="tg_bode" type="text" placeholder="Thời gian làm bài"/>
                 </div>
-                <div class="col-3">                 
+                <div class="col-3">
                     <button type="submit" name="tao-bo-de" class="btn btn-block btn-outline-success" value="true">Tạo bộ đề</button>
                 </div>
-            </div>    
-            
+            </div>
+
             <input type="hidden" id="data_bo_de" name="bo_de" />
             <input type="hidden"  name="user_id" value="{{$data['user_id']}}" />
             <input type="hidden"  name="bd_monhoc" value="{{$category_topic_id ?? ''}}" />
             <input type="hidden"  name="bd_khoilop" value="{{$category_class_id ?? ''}}" />
             <input type="hidden"  name="bd_capdo" value="{{$question_level ?? ''}}" />
             <input type="hidden"  name="bd_loaicau" value="{{$question_type ?? ''}}" />
-            
-           
+
+
         </div>
       </form>
     </div>

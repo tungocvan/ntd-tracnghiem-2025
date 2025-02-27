@@ -65,6 +65,10 @@ class QuizController extends Controller
     public function submitList(Request $request)
     {
         //dd($request->all());
+        if($request->monhoc == null || $request->khoilop == null || $request->capdo == null){
+            return redirect()->route('quiz.topic-set-add')
+                        ->with('success','Vui lòng chọn môn học, khối lớp và cấp độ');
+        }
         $monhoc = Option::get_option('quiz_monhoc', []);
         $khoilop = Option::get_option('quiz_khoilop', []);
         $capdo = Option::get_option('quiz_capdo', []);
@@ -124,7 +128,9 @@ class QuizController extends Controller
                     $question->action = "<input type='checkbox' class='select-row' name='chk-$question->id' value='$question->id' onclick='HanlderCheck(this,$question->id)' >";
                 }
             }else{
-                dd($questions);
+                 //dd($request->all());
+                 return redirect()->route('quiz.topic-set-add')
+                 ->with('success','Không có câu hỏi phù hợp.');
             }
 
 
@@ -257,12 +263,15 @@ class QuizController extends Controller
     public function createSetquiz(Request $request)
     {
 
-        //dd($request->all());
+      //  dd($request->all());
         // $id_bode = json_decode($request['bo_de'],true);
         // foreach($id_bode as $key => $value){
 
         // }
         //dd($bode);
+        if($request->bo_de == null){
+            return redirect()->route('quiz.topic-set-add')->with('success', 'Bạn chưa có chọn câu hỏi cho bộ đề.');
+        }
         $user_id = $request->user()->id;
         $category_topic_id = $request['bd_monhoc'];
         $category_class_id = $request['bd_khoilop'];
@@ -270,7 +279,7 @@ class QuizController extends Controller
         $question_type = $request['bd_loaicau'];
         $total_questions = $request['bd_socau'];
         $thoi_gian = $request['tg_bode'];
-        $ten_bode = $request['ten_bode'];
+        $ten_bode = $request['ten_bode'] ?? 'bode_'.time();
         $id_bode = json_decode($request['bo_de'],true);
 
         $questions = Question::where('category_topic_id',$category_topic_id)
@@ -301,7 +310,7 @@ class QuizController extends Controller
             'category_class_id' => $category_class_id,
             'question_type' => $question_type,
             'user_id' => $user_id,
-            'timeRemaining' => $thoi_gian,
+            'timeRemaining' => $thoi_gian ?? count($result),
             'name' => $ten_bode,
             'total_questions' => count($result),
             'questions' => $questionStr
