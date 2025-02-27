@@ -93,7 +93,7 @@
             </x-adminlte-select>
         </div>
         <div class="col">
-            <button type="submit" name="loc-cau-hoi" class="btn btn-block btn-outline-success" value="true">Hiển thị câu hỏi</button>
+            <button type="submit" id="loc-cau-hoi" name="loc-cau-hoi" class="btn btn-block btn-outline-success" value="true" >Hiển thị câu hỏi</button>
         </div>
     </div>
     </form>
@@ -155,15 +155,20 @@
 
 <script>
     var bode = [];
+
     var socau = document.getElementById('socau');
     var dataBode = document.getElementById('data_bo_de');
     var taobode = document.getElementById('tao-bo-de');
+    //var loccauhoi = document.getElementById('loc-cau-hoi');
+
     document.addEventListener('DOMContentLoaded', function(event) {
+
         document.getElementById('monhoc').addEventListener('change', function(e) {
-               //  console.log(e.target.value);
+               // console.log(e.target.value);
         });
         document.getElementById('khoilop').addEventListener('change', function(e) {
                 // console.log(e.target.value);
+
         });
         document.getElementById('capdo').addEventListener('change', function(e) {
               //   console.log(e.target.value);

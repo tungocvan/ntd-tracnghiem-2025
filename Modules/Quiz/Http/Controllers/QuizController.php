@@ -68,6 +68,7 @@ class QuizController extends Controller
     {
 
 
+        //dd($request->all());
         $monhoc = Option::get_option('quiz_monhoc', []);
         $khoilop = Option::get_option('quiz_khoilop', []);
         $capdo = Option::get_option('quiz_capdo', []);
@@ -103,6 +104,12 @@ class QuizController extends Controller
                 'id' => $questions->id
             ];
             return view('Quiz::quiz-edit',compact('questions','data'));
+        }
+
+
+        if($request->monhoc == null || $request->khoilop == null || $request->capdo == null){
+            return redirect()->route('quiz.topic-set-add')
+                        ->with('success','Vui lòng chọn môn học, khối lớp và cấp độ');
         }
 
         if($request['loc-cau-hoi'] == "true"){
@@ -150,11 +157,7 @@ class QuizController extends Controller
             ];
 
             //dd($data);
-            return view('Quiz::bode.topic-set-add',compact('data','category_topic_id','category_class_id','question_level_id','question_type_id'));
-        }
-        if($request->monhoc == null || $request->khoilop == null || $request->capdo == null){
-            return redirect()->route('quiz.topic-set-add')
-                        ->with('success','Vui lòng chọn môn học, khối lớp và cấp độ');
+            return view('Quiz::bode.topic-set-add',compact('data','category_topic_id','category_class_id','question_level_id','question_type_id','question_level','question_type'));
         }
 
     }
@@ -270,7 +273,7 @@ class QuizController extends Controller
     public function createSetquiz(Request $request)
     {
 
-      //  dd($request->all());
+        //dd($request->all());
         // $id_bode = json_decode($request['bo_de'],true);
         // foreach($id_bode as $key => $value){
 
@@ -311,7 +314,7 @@ class QuizController extends Controller
         //$questionStr = serialize($questionArray);
 
         // $result = json_decode($questionStr);
-        // dd($result);
+       // dd($result);
         $data = [
             'category_topic_id' => $category_topic_id,
             'category_class_id' => $category_class_id,
@@ -323,6 +326,7 @@ class QuizController extends Controller
             'questions' => $questionStr
         ];
 
+       // dd($data);
 
         $question = questionSet::create($data);
         return redirect()->route('quiz.topic-set-list')->with('success', 'Đã thêm bộ đề thành công.');

@@ -10,6 +10,7 @@
                     <p>Tổng số câu: <span> {{$total['total']}}</span></p>
                     <p>Số câu trả lời đúng:<span> {{$total['right']}}</span></p>
                     <p>Số câu trả lời sai: <span> {{$total['wrong']}}</span></p>
+                    <p>Chưa trả lời: <span> {{$total['noAnswer']}}</span></p>
                     <p>Đạt tỉ lệ: <span> {{$total['tile']}}%</span></p>
                 </div>
                 <div class="card-body">
