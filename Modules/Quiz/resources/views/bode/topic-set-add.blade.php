@@ -20,13 +20,13 @@
 @php
   $questions =  $data['questions'] ?? [];
   $heads = [
+        ['label' => '<input type="checkbox" onclick="toggleSelectAll(this)">', 'no-export' => true, 'width' => 2],
         'ID',
         'Nội dung câu hỏi',
         'Môn học',
         'Khối lớp',
         'Cấp độ',
-        'Loại câu hỏi',
-        ['label' => '<input type="checkbox" onclick="toggleSelectAll(this)">', 'no-export' => true, 'width' => 15],
+        'Loại câu hỏi'
     ];
     $colSelector = ':not([dt-no-export])';
     $lengthBtn = [
@@ -42,15 +42,15 @@
     ];
     $config = [
         'data' => $questions,
-        'order' => [[0, 'desc']],
+        'order' => [[1, 'desc']],
         'columns' => [
+            ['orderable' => false, 'data' => 'action'],
             ['data' => 'id','name' => 'id'],
             ['data' => 'content','name' => 'content'],
             ['data' => 'name_topic'],
             ['data' => 'name_class'],
             ['data' => 'question_level'],
-            ['data' => 'question_type'],
-            ['orderable' => false, 'data' => 'action'],
+            ['data' => 'question_type']
         ],
         'lengthMenu' => [[10, 25, 50, -1], ['10 rows', '25 rows', '50 rows', 'Show all']],
 
