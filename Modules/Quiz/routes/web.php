@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Quiz\Http\Controllers\QuizController; 
+use Modules\Quiz\Http\Controllers\QuizController;
 
 Route::middleware(['web','auth'])->prefix('/admin')->name('quiz.')->group(function(){
     Route::get('/quiz-list', [QuizController::class,'quizList'])->name('quiz-list');
