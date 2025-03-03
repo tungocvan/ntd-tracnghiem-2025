@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('category_class_id'); // khối lớp
             $table->text('question_details'); // Trường lưu nội dung câu hỏi, đáp án và đáp án đúng
             $table->enum('question_type', ['Một đáp án','Đúng/Sai','Nhiều đáp án', 'Tự luận']); // Loại câu hỏi, mặc định là "Một đáp án"
-            $table->enum('question_level', ['Biết', 'Hiểu', 'Vận dụng']);
+            $table->enum('question_level', ['Biết', 'Hiểu', 'Vận dụng','Tổng hợp']);
             $table->timestamps(); // Thời gian tạo và chỉnh sửa (created_at, updated_at)
 
             // Định nghĩa khóa ngoại cho user_id, tham chiếu đến bảng users

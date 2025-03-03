@@ -424,8 +424,9 @@ class QuizController extends Controller
         // ->get();
         $topic = Option::get_option('quiz_monhoc', []);
         $class = Option::get_option('quiz_khoilop', []);
+        $capdo = Option::get_option('quiz_capdo', []);
         //dd($topic);
-        return view('Quiz::settings',compact('topic','class'));
+        return view('Quiz::settings',compact('topic','class','capdo'));
     }
 
     public function submitTopic(Request $request){
@@ -434,6 +435,7 @@ class QuizController extends Controller
 
         $topic = Option::get_option('quiz_monhoc', []);
         $class = Option::get_option('quiz_khoilop', []);
+        $capdo = Option::get_option('quiz_capdo', []);
 
         if($request['edit']){
           $id =$request['edit'];
@@ -506,6 +508,18 @@ class QuizController extends Controller
 
             array_push($class, $name);
             Option::set_option('quiz_khoilop',$class);
+            return redirect()->route('quiz.settings')->with('success', "Thêm mới $name thành công.");
+        }
+        if($request['input-add-level']){
+            $name = $request['input-add-level'];
+            $capdo = Option::get_option('quiz_capdo', []);
+
+            if (in_array($name, $capdo)) {
+                return redirect()->route('quiz.settings')->with('success', "$name  đã tồn tại");
+            }
+
+            array_push($capdo, $name);
+            Option::set_option('quiz_capdo',$capdo);
             return redirect()->route('quiz.settings')->with('success', "Thêm mới $name thành công.");
         }
 
