@@ -84,7 +84,7 @@
         </div>
         <div class="col" style="display: none">
             <x-adminlte-select name="capdo">
-                <x-adminlte-options :options="$data['capdo']"  :selected="$question_level_id ??  session('question_level_id') ?? -1"  igroup-size="md" label-class="text-lightblue"  placeholder="Chọn Cấp độ..." />
+                <x-adminlte-options :options="$data['capdo']"  :selected="$question_level_id ??  session('question_level_id') ?? 0"  igroup-size="md" label-class="text-lightblue"  placeholder="Chọn Cấp độ..." />
             </x-adminlte-select>
         </div>
         <div class="col" style="display: none">
