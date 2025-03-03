@@ -64,6 +64,13 @@ class StudentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    public function result()
+    {
+        return view('Student::result');
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         //

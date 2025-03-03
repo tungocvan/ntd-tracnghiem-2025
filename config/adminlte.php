@@ -353,6 +353,10 @@ return [
             'text' => 'Luyện Tập',
             'url' => 'student',
         ],
+        [
+            'text' => 'Xem kết quả luyện tập',
+            'url' => 'student/result',
+        ],
         // [
         //     'text' => 'Manage Product',
         //     'url' => 'admin/products',

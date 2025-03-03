@@ -82,12 +82,12 @@
                 <x-adminlte-options :options="$data['khoilop']"  :selected="$category_class_id ?? session('category_class_id') ?? -1"  igroup-size="md" label-class="text-lightblue"  placeholder="Chọn Khối lớp..." />
             </x-adminlte-select>
         </div>
-        <div class="col">
+        <div class="col" style="display: none">
             <x-adminlte-select name="capdo">
                 <x-adminlte-options :options="$data['capdo']"  :selected="$question_level_id ??  session('question_level_id') ?? -1"  igroup-size="md" label-class="text-lightblue"  placeholder="Chọn Cấp độ..." />
             </x-adminlte-select>
         </div>
-        <div class="col">
+        <div class="col" style="display: none">
             <x-adminlte-select name="loaicau">
                 <x-adminlte-options :options="$data['loaicau']" :selected="$question_type_id ?? session('question_type_id') ?? 0"  igroup-size="md" label-class="text-lightblue"  placeholder="Loại đáp án..." />
             </x-adminlte-select>

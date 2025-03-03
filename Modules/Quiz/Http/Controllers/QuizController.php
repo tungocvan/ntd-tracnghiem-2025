@@ -321,7 +321,7 @@ class QuizController extends Controller
             'category_class_id' => $category_class_id,
             'question_type' => $question_type,
             'user_id' => $user_id,
-            'timeRemaining' => $thoi_gian ?? count($result),
+            'timeRemaining' =>  preg_replace('/\D/', '', $thoi_gian) ?? count($result),
             'name' => $ten_bode,
             'total_questions' => count($result),
             'questions' => $questionStr

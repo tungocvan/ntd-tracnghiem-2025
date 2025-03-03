@@ -36,12 +36,12 @@
                 <x-adminlte-options :options="$data['khoilop']"  :selected="old('khoilop')"  igroup-size="md" label-class="text-lightblue"  placeholder="Chọn Khối lớp..." />
             </x-adminlte-select>
         </div>
-        <div class="col">
+        <div class="col" style="display: none">
             <x-adminlte-select name="capdo">
-                <x-adminlte-options :options="$data['capdo']"  :selected="old('capdo')"  igroup-size="md" label-class="text-lightblue"  placeholder="Chọn Cấp độ..." />
+                <x-adminlte-options :options="$data['capdo']"  :selected="old('capdo') ?? 0"  igroup-size="md" label-class="text-lightblue"  placeholder="Chọn Cấp độ..." />
             </x-adminlte-select>
         </div>
-        <div class="col">
+        <div class="col" style="display: none">
             <x-adminlte-select name="loaicau">
                 <x-adminlte-options :options="$data['loaicau']" :selected="old('loaicau') ?? 0"  igroup-size="md" label-class="text-lightblue"  placeholder="Loại đáp án..." />
             </x-adminlte-select>

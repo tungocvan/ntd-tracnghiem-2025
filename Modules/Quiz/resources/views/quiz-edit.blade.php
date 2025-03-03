@@ -43,12 +43,12 @@
             </x-adminlte-select>
         </div>
         <div class="col">
-            <x-adminlte-select name="capdo">
+            <x-adminlte-select name="capdo" style="display: none">
                 <x-adminlte-options :options="$data['capdo']"  :selected="old('capdo') ?? $questions->question_level"  igroup-size="md" label-class="text-lightblue"  placeholder="Chọn Cấp độ..." />
             </x-adminlte-select>
         </div>
         <div class="col">
-            <x-adminlte-select name="loaicau">
+            <x-adminlte-select name="loaicau" style="display: none">
                 <x-adminlte-options :options="$data['loaicau']" :selected="old('loaicau') ?? $questions->question_type"  igroup-size="md" label-class="text-lightblue"  placeholder="Loại đáp án..." />
             </x-adminlte-select>
         </div>
