@@ -262,8 +262,9 @@ class QuizController extends Controller
         $questionSet = QuestionSet::find($id);
         $timeRemaining = $questionSet->timeRemaining;
         $questions = parseQuestions($questionSet->questions);
+
         //$questions = unserialize($questionSet->questions);
-        //  dd($questions);
+        //dd($questions);
         // $questions = Question::all();
         // foreach ($questions as $question) {
         //     $question->parsed_details = parseQuestionDetails($question->question_details);

@@ -17,11 +17,11 @@
 </div>
 
 @session('success')
-    <div class="alert alert-success" role="alert"> 
+    <div class="alert alert-success" role="alert">
         {{ $value }}
     </div>
 @endsession
- 
+
 <table class="table table-bordered">
    <tr>
        <th>No</th>
@@ -58,5 +58,5 @@
 
 {!! $data->links('pagination::bootstrap-5') !!}
 
-<p class="text-center text-primary"><small>Tutorial by Từ Ngọc Vân</small></p>
+{{-- <p class="text-center text-primary"><small>Tutorial by Trường Tiểu Học Nguyễn Thị Định</small></p> --}}
 @endsection

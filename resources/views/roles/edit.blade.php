@@ -51,6 +51,6 @@
         </div>
     </div>
 </form>
-
-<p class="text-center text-primary"><small>Tutorial by Từ Ngọc Vân</small></p>
+{{--
+<p class="text-center text-primary"><small>Tutorial by Từ Ngọc Vân</small></p> --}}
 @endsection

@@ -1,5 +1,5 @@
 @extends('layouts.app')
- 
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -27,7 +27,7 @@
 
                                 @foreach($question['answers'] as $answerIndex => $answer)
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="answers[{{ $index }}]" id="answer{{ $index }}_{{ $answerIndex }}" value="{{ $answerIndex }}">
+                                        <input class="form-check-input" type="radio" name="answers[{{ $index }}]" id="answer{{ $index }}_{{ $answerIndex }}" value="{{ $answerIndex }}" />
                                         <label class="form-check-label" for="answer{{ $index }}_{{ $answerIndex }}">
                                             {{ $answer }}
                                         </label>
@@ -71,8 +71,48 @@
     // window.onload = function() {
     //     updateTimer();
     // };
-    document.addEventListener('DOMContentLoaded', function(event) {
+    // document.addEventListener('DOMContentLoaded', function(event) {
 
+    //     updateTimer();
+
+    // });
+
+    document.addEventListener('DOMContentLoaded', function () {
         updateTimer();
+    // Lấy tất cả các câu hỏi (các phần tử có class 'mb-4')
+    const questions = document.querySelectorAll('.mb-4');
+
+    // Hàm xáo trộn mảng (shuffle)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]; // Hoán đổi vị trí
+        }
+    }
+
+    // Duyệt qua từng câu hỏi
+    questions.forEach(question => {
+        // Lấy tiêu đề câu hỏi
+        const title = question.querySelector('h4');
+
+        // Lấy tất cả các lựa chọn (các phần tử có class 'form-check')
+        const answers = Array.from(question.querySelectorAll('.form-check'));
+
+        // Xáo trộn vị trí các lựa chọn
+        shuffleArray(answers);
+
+        // Xóa tất cả các lựa chọn hiện tại trong câu hỏi
+        answers.forEach(answer => {
+            question.removeChild(answer);
+        });
+
+        // Thêm lại tiêu đề câu hỏi
+        question.appendChild(title);
+
+        // Thêm lại các lựa chọn đã xáo trộn vào câu hỏi
+        answers.forEach(answer => {
+            question.appendChild(answer);
+        });
     });
+});
 </script>

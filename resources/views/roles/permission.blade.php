@@ -30,7 +30,7 @@
                     <p>Không có Modules để phân quyền.</p>
                 @endif
 
-                
+
             </div>
         </div>
 
@@ -39,6 +39,6 @@
         </div>
     </div>
 </form>
-
-<p class="text-center text-primary"><small>Tutorial by Từ Ngọc Vân</small></p>
+{{--
+<p class="text-center text-primary"><small>Tutorial by Từ Ngọc Vân</small></p> --}}
 @endsection
