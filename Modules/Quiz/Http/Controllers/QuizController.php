@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Quiz\Http\Controllers;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 use App\Models\Option;
 use Illuminate\Support\Str;
@@ -413,6 +414,8 @@ class QuizController extends Controller
         $total['tile']= $right/($right+ $wrong+$noAnswer)*100;
         //dd($results);
         // Trả về view kết quả
+        $pdf = PDF::loadView('Quiz::result-set', ['results' => $results,'total' => $total]);
+        $pdf->download('sample.pdf');
         return view('Quiz::result-set', ['results' => $results,'total' => $total]);
     }
 
@@ -796,4 +799,17 @@ class QuizController extends Controller
     {
         //
     }
+
+    public function exportPDF()
+    {
+        // Dữ liệu bạn muốn truyền cho view
+        $data = ['title' => 'Sample PDF', 'content' => 'This is a sample PDF file.'];
+
+        // Tạo PDF từ view
+        $pdf = PDF::loadView('Quiz::result-set', $data);
+
+        // Xuất PDF
+        return $pdf->download('sample.pdf');
+    }
+
 }

@@ -26,4 +26,8 @@ Route::middleware(['web','auth'])->prefix('/admin')->name('quiz.')->group(functi
     Route::post('/quiz-import', [QuizController::class,'quizImport'])->name('quiz-import');
     Route::post('/quiz-import-set', [QuizController::class,'quizImportSet'])->name('quiz-import-set');
     Route::post('/quiz-create-setquiz', [QuizController::class,'createSetquiz'])->name('create-setquiz');
+    
+   
 });
+
+Route::get('/export-pdf', [QuizController::class, 'exportPDF'])->name('export.pdf');

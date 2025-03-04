@@ -36,6 +36,8 @@
             margin-right: 5px;
         }
     </style>
+    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
+    
 </head>
 <body>
     <div id="app">
@@ -116,5 +118,6 @@
         </main>
 
     </div>
+    @yield('js')
 </body>
 </html>
