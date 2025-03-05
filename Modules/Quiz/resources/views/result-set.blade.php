@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    <button id="exportPdf" class="btn btn-primary">Export PDF</button>
+
 </div>
 @endsection
 

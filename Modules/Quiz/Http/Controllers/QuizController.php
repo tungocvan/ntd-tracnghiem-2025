@@ -414,8 +414,8 @@ class QuizController extends Controller
         $total['tile']= $right/($right+ $wrong+$noAnswer)*100;
         //dd($results);
         // Trả về view kết quả
-        $pdf = PDF::loadView('Quiz::result-set', ['results' => $results,'total' => $total]);
-        $pdf->download('sample.pdf');
+        // $pdf = PDF::loadView('Quiz::result-set', ['results' => $results,'total' => $total]);
+        // $pdf->download('sample.pdf');
         return view('Quiz::result-set', ['results' => $results,'total' => $total]);
     }
 
