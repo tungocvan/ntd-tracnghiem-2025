@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Option;
 use Modules\Quiz\Models\QuestionSet;
+use App\Models\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -66,7 +68,29 @@ class StudentController extends Controller
      */
     public function result()
     {
-        return view('Student::result');
+        $files = UploadedFile::all(); // Lấy tất cả file đã upload
+        foreach ($files as $key => $file) {
+           $btnDetails = "<a href='/student/view-file/$file->id' class='btn btn-primary' target='_blank'>Xem</a>";
+           $btnDelete = "<a href='/student/delete-file/$file->id' class='btn btn-primary'>Xóa</a>";
+           $files[$key]['action'] = $btnDetails." ".$btnDelete; 
+        }
+        //dd($files);
+        return view('Student::result',compact('files'));
+    }
+    public function viewFile($id)
+    {
+        $file = UploadedFile::findOrFail($id); // Tìm file theo ID
+        $filePath = storage_path('app/' . $file->file_path); // Lấy đường dẫn file
+
+        return response()->file($filePath); // Trả về file để trình duyệt hiển thị
+    }
+    public function deleteFile($id)
+    {
+            $UploadedFile = UploadedFile::find($id);
+            $UploadedFile->delete();
+            return redirect()->route('student.result')
+                        ->with('success','Luyện tập đã xóa.');
+        
     }
     /**
      * Show the form for creating a new resource.

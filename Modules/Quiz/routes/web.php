@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Quiz\Http\Controllers\QuizController;
+use Modules\Quiz\Http\Controllers\PdfUploadController;
 
 Route::middleware(['web','auth'])->prefix('/admin')->name('quiz.')->group(function(){
     Route::get('/quiz-list', [QuizController::class,'quizList'])->name('quiz-list');
@@ -30,4 +31,4 @@ Route::middleware(['web','auth'])->prefix('/admin')->name('quiz.')->group(functi
    
 });
 
-Route::get('/export-pdf', [QuizController::class, 'exportPDF'])->name('export.pdf');
+Route::post('/upload-pdf', [PdfUploadController::class, 'upload'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);

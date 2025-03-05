@@ -800,16 +800,6 @@ class QuizController extends Controller
         //
     }
 
-    public function exportPDF()
-    {
-        // Dữ liệu bạn muốn truyền cho view
-        $data = ['title' => 'Sample PDF', 'content' => 'This is a sample PDF file.'];
-
-        // Tạo PDF từ view
-        $pdf = PDF::loadView('Quiz::result-set', $data);
-
-        // Xuất PDF
-        return $pdf->download('sample.pdf');
-    }
+  
 
 }

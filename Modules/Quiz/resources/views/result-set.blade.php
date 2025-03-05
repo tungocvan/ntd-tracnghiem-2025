@@ -55,56 +55,72 @@
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+   
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const exportPdfButton = document.getElementById('exportPdf');
-    
-            if (exportPdfButton) {
-                exportPdfButton.addEventListener('click', function (event) {
-                    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-    
-                    const element = document.getElementById('result'); // Lấy phần tử có id="result"
-    
-                    // Sử dụng html2canvas để chụp nội dung
-                    html2canvas(element).then(canvas => {
-                        const imgData = canvas.toDataURL('image/png'); // Chuyển đổi canvas thành hình ảnh PNG
-    
-                        // Tạo PDF với khổ A4, hướng dọc
-                        const pdf = new jspdf.jsPDF('p', 'mm', 'a4'); // Hướng dọc, khổ A4
-    
-                        const imgWidth = 210; // Chiều rộng của khổ A4 (mm)
-                        const imgHeight = (canvas.height * imgWidth) / canvas.width; // Tính chiều cao dựa trên tỷ lệ
-    
-                        const a4Height = 297; // Chiều cao khổ A4 (mm)
-                        const marginTop = 2.64583; // Margin top 10px (2.64583mm)
-                        const marginBottom = 4.64583; // Margin bottom 10px (2.64583mm)
-                        const contentHeight = a4Height - marginTop - marginBottom; // Chiều cao có thể sử dụng cho nội dung
-    
-                        let position = 0; // Vị trí bắt đầu của hình ảnh
-    
-                        // Chia nội dung thành nhiều trang nếu cần
-                        while (position < imgHeight) {
-                            if (position > 0) {
-                                pdf.addPage(); // Thêm trang mới nếu cần
-                            }
-    
-                            // Cắt hình ảnh và thêm vào PDF với margin top và bottom
-                            pdf.addImage(
-                                imgData, // Dữ liệu hình ảnh
-                                'PNG', // Định dạng hình ảnh
-                                0, // Vị trí x (ngang)
-                                -position + marginTop, // Vị trí y (dọc) với margin top
-                                imgWidth, // Chiều rộng hình ảnh
-                                imgHeight // Chiều cao hình ảnh
-                            );
-    
-                            position += contentHeight; // Di chuyển vị trí cho trang tiếp theo
-                        }
-    
-                        pdf.save('result.pdf'); // Lưu file PDF với tên "result.pdf"
-                    });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const element = document.getElementById('result');
+            html2canvas(element, {
+                scale: 1,
+                useCORS: true,
+                logging: false,
+                allowTaint: true,
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/jpeg', 0.8);
+                const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+
+                const imgWidth = 210; 
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                const a4Height = 297; 
+                const marginTop = 5; 
+                const marginBottom = 5;
+                const contentHeight = a4Height - marginTop - marginBottom;
+
+                let position = 0;
+
+                while (position < imgHeight) {
+                    if (position > 0) {
+                        pdf.addPage();
+                    }
+
+                    const remainingHeight = imgHeight - position;
+                    const renderHeight = Math.min(remainingHeight, contentHeight);
+                    const yPosition = -position + marginTop;
+                    pdf.addImage(
+                        imgData,
+                        'JPEG',
+                        0,
+                        yPosition,
+                        imgWidth,
+                        renderHeight
+                    );
+
+                    position += contentHeight;
+                }
+
+                // Save PDF to Blob
+                const pdfBlob = pdf.output('blob');
+                const formData = new FormData();
+                formData.append('pdf', pdfBlob, 'result.pdf');
+
+                // Upload PDF to server
+                fetch('/upload-pdf', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Upload successful:', data);
+                })
+                .catch(error => {
+                    console.error('Upload failed:', error);
                 });
-            }
-        });
-        </script>
+            });
+});
+
+    </script>
+
 @stop
