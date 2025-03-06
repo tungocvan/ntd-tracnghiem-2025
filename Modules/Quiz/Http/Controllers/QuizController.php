@@ -412,11 +412,12 @@ class QuizController extends Controller
         $total['noAnswer']= $noAnswer;
         $total['total']= ($right+ $wrong+$noAnswer);
         $total['tile']= $right/($right+ $wrong+$noAnswer)*100;
+       // dd($request->user()->name);
         //dd($results);
         // Trả về view kết quả
         // $pdf = PDF::loadView('Quiz::result-set', ['results' => $results,'total' => $total]);
         // $pdf->download('sample.pdf');
-        return view('Quiz::result-set', ['results' => $results,'total' => $total]);
+        return view('Quiz::result-set', ['results' => $results,'total' => $total,'name' => $request->user()->name]);
     }
 
     public function settings(Request $request)
@@ -800,6 +801,6 @@ class QuizController extends Controller
         //
     }
 
-  
+
 
 }

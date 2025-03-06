@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Kết quả trắc nghiệm') }} - <a href="{{ route('student.index') }}">Quay lại</a></div>
                 <div class="card-body">
+                    <p><strong>Họ và tên: <span> {{$name}}</span></strong></p>
                     <p>Tổng số câu: <span> {{$total['total']}}</span></p>
                     <p>Số câu trả lời đúng:<span> {{$total['right']}}</span></p>
                     <p>Số câu trả lời sai: <span> {{$total['wrong']}}</span></p>
@@ -55,7 +56,7 @@
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-   
+
     <script>
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -69,10 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const imgData = canvas.toDataURL('image/jpeg', 0.8);
                 const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
 
-                const imgWidth = 210; 
+                const imgWidth = 210;
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                const a4Height = 297; 
-                const marginTop = 5; 
+                const a4Height = 297;
+                const marginTop = 5;
                 const marginBottom = 5;
                 const contentHeight = a4Height - marginTop - marginBottom;
 
