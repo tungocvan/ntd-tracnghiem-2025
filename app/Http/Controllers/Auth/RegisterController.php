@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -63,10 +65,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+
+            $role = null;
+            $roleId = Role::where('name','User')->get()[0]->id ?? null;
+
+            if(!$roleId){
+                $role = Role::create(['name' => 'User']);
+                $roleId = $role->id;
+            }
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+
+
+            if($role !== null){
+                $permissions = Permission::where('name','admin-list')->orWhere('name','user-list')->pluck('id','id')->all();
+                $role->syncPermissions($permissions);
+            }
+
+            $user->assignRole([$roleId]);
+
+            return $user;
     }
 }
