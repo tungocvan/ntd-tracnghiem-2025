@@ -34,7 +34,7 @@ class HomeController extends Controller
                 return redirect()->route('student.index');
 
             default:
-                 return view('home');
+                 return redirect()->route('student.index');
         }
 
 
